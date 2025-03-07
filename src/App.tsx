@@ -1,33 +1,23 @@
-import {useEffect, useState} from 'react'
 import './App.css'
-import {data} from "./Data.ts"
+import {NavLink, Route, Router, Routes} from "react-router";
+import Character from "./Character.tsx";
 
 function App() {
-    const [randm, setRandm] = useState<any[]>([])
-    const [search, setSearch] = useState("")
 
-    useEffect(() => {
-        data().then(setRandm)
-    }, []);
-
-    const filteredCharacters = randm.filter((char) =>
-    char.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <>
+        <header>
+            <NavLink to={"/"} >Startseite</NavLink>
+            <NavLink to="/characters">Characters</NavLink>
+        </header>
         <div>
-            <h1>Rick and Morty Character</h1>
-            <input
-                type="text"
-                placeholder="Search for a character ..."
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                />
-            <ul>
-                {filteredCharacters.map((char) => (
-                    <li key={char.id}>{char.name}</li>
-                ))}
-            </ul>
+            <Routes>
+                <Route path={"/"} element={
+                    <h1>Welcome Home</h1>
+                } />
+                <Route path={"/characters"} element={<Character />} />
+            </Routes>
         </div>
     </>
   )
